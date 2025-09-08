@@ -81,19 +81,19 @@ function UserMenu() {
 
 export default function Header() {
   return (
-    <header className="border-b border-border bg-background">
+    <header className="border-b border-border bg-background dark:bg-gray-900 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <CircleIcon className="h-6 w-6 text-primary" />
-          <span className="ml-2 text-xl font-semibold text-foreground">{siteConfig.name}</span>
+          <span className="ml-2 text-xl font-semibold text-foreground dark:text-white">{siteConfig.name}</span>
         </Link>
         
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link href="/#courses" className="text-foreground hover:text-primary transition-colors">
+          <Link href="/#courses" className="text-foreground dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors">
             Courses
           </Link>
-          <Link href="/#instructors" className="text-foreground hover:text-primary transition-colors">
+          <Link href="/#instructors" className="text-foreground dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors">
             Find Instructors
           </Link>
           <button 
@@ -102,11 +102,11 @@ export default function Header() {
               const encodedMessage = encodeURIComponent(message);
               window.open(`https://wa.me/444456183484?text=${encodedMessage}`, '_blank');
             }}
-            className="text-foreground hover:text-primary transition-colors font-medium cursor-pointer bg-transparent border-none"
+            className="text-foreground dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors font-medium cursor-pointer bg-transparent border-none"
           >
             Pass Theory
           </button>
-          <Link href="/instructor-registration" className="text-foreground hover:text-primary transition-colors font-medium">
+          <Link href="/instructor-registration" className="text-foreground dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors font-medium">
             Become an Instructor
           </Link>
         </nav>
