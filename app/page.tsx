@@ -5,6 +5,7 @@ import HeroSection from '@/components/driving-school/landing/hero-section';
 import UKLicenseProcess from '@/components/driving-school/process/uk-license-process';
 import CourseCard from '@/components/driving-school/courses/course-card';
 import CourseModal from '@/components/driving-school/courses/course-modal';
+import { CoursePurchaseCounter } from '@/components/ui/course-purchase-counter';
 import InstructorCard from '@/components/driving-school/instructors/instructor-card';
 import InstructorFilters from '@/components/driving-school/instructors/instructor-filters';
 import WhatsAppWidget from '@/components/driving-school/whatsapp/whatsapp-widget';
@@ -397,6 +398,7 @@ export default function HomePage() {
         onExitIntentShow={() => setShowWhatsAppOnExit(false)}
       />
 
+      <CoursePurchaseCounter />
       <ScrollToTop />
       <PWAInstallPrompt />
     </main>

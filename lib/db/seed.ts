@@ -15,8 +15,7 @@ async function seed() {
         passwordHash: passwordHash,
         name: 'Test User',
       },
-    ])
-    .returning();
+    ]);
 
   console.log('Initial user created.');
   console.log('Seed data created successfully.');

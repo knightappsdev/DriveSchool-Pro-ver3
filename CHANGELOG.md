@@ -1,4 +1,4 @@
-# Changelog
+*# Changelog
 
 All notable changes to DriveSchool Pro will be documented in this file.
 

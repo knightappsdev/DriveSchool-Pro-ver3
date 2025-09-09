@@ -5,8 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { X, Clock, Car, CheckCircle } from 'lucide-react';
+import { X, Clock, Car, CheckCircle, Users, TrendingUp, Activity } from 'lucide-react';
 import { Course } from './course-card';
+import { useCourseStats } from '@/hooks/use-course-stats';
 
 interface CourseModalProps {
   course: Course | null;
@@ -18,6 +19,7 @@ interface CourseModalProps {
 
 export default function CourseModal({ course, isOpen, onClose, onBookNow, onMaybeLater }: CourseModalProps) {
   const [transmissionType, setTransmissionType] = useState<string>('manual');
+  const courseStats = useCourseStats(course?.id || 0);
 
   if (!isOpen || !course) return null;
 
@@ -71,6 +73,58 @@ Please contact me to arrange the booking. Thank you!`;
         </CardHeader>
 
         <CardContent className="space-y-6">
+          {/* Live Stats Banner */}
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <h3 className="font-semibold text-green-800">Live Course Stats</h3>
+              </div>
+              <TrendingUp className="w-5 h-5 text-green-600" />
+            </div>
+            
+            <div className="grid grid-cols-3 gap-4 mb-3">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Users className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium text-gray-700">Students</span>
+                </div>
+                <div className="text-2xl font-bold text-blue-600">{courseStats.studentsPurchased}</div>
+                <div className="text-xs text-gray-600">enrolled</div>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Activity className="w-4 h-4 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">Rating</span>
+                </div>
+                <div className="text-2xl font-bold text-green-600">4.8</div>
+                <div className="text-xs text-gray-600">out of 5</div>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <CheckCircle className="w-4 h-4 text-purple-600" />
+                  <span className="text-sm font-medium text-gray-700">Success</span>
+                </div>
+                <div className="text-2xl font-bold text-purple-600">94%</div>
+                <div className="text-xs text-gray-600">pass rate</div>
+              </div>
+            </div>
+            
+            <div className="border-t border-green-200 pt-3">
+              <div className="text-sm font-medium text-gray-700 mb-2">Recent Activity:</div>
+              <div className="space-y-1">
+                {courseStats.recentActivity.slice(0, 2).map((activity, index) => (
+                  <div key={index} className="text-xs text-gray-600 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    {activity}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
           {/* Course Overview */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">

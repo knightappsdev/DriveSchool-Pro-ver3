@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import TypewriterText from '@/components/ui/typewriter-text';
 import DrivingAnimation from './driving-animation';
 import { Play, Star, Users, MapPin, Clock, CheckCircle, Calendar, MessageCircle } from 'lucide-react';
 
@@ -33,12 +34,12 @@ export default function HeroSection({ onBookLessons, onFreeConsultation }: HeroS
               </div>
               
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="inline-block animate-fade-in-up animate-bounce">
-                  Learn to Drive with
-                </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600 block animate-fade-in-up animation-delay-500 animate-text-gradient animate-pulse">
-                  Expert Instructors
-                </span>
+                <TypewriterText 
+                  text="Learn to Drive with Expert Instructors"
+                  speed={80}
+                  delay={500}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600"
+                />
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed">
@@ -98,9 +99,9 @@ export default function HeroSection({ onBookLessons, onFreeConsultation }: HeroS
           </div>
 
           {/* Right Content - Driving Animation */}
-          <div className="relative">
-            <Card className="relative overflow-hidden bg-gradient-to-br from-blue-100 to-green-100 border-0 shadow-2xl">
-              <div className="aspect-video relative">
+          <div className="relative h-full flex items-center">
+            <Card className="relative overflow-hidden bg-gradient-to-br from-blue-100 to-green-100 border-0 shadow-2xl w-full">
+              <div className="h-96 relative">
                 <DrivingAnimation />
               </div>
             </Card>
