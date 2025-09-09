@@ -10,12 +10,6 @@ import { siteConfig } from '@/lib/config';
 export const metadata: Metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
-  manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Ofemo Driving School',
-  },
   formatDetection: {
     telephone: false,
   },

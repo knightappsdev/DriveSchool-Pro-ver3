@@ -11,7 +11,6 @@ import InstructorFilters from '@/components/driving-school/instructors/instructo
 import WhatsAppWidget from '@/components/driving-school/whatsapp/whatsapp-widget';
 import ExitIntentPopup from '@/components/driving-school/retargeting/exit-intent-popup';
 import ScrollToTop from '@/components/scroll-to-top';
-import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { drivingCourses } from '@/lib/data/courses';
@@ -19,7 +18,6 @@ import { drivingInstructors, getInstructorsByFilters } from '@/lib/data/instruct
 import { Course } from '@/components/driving-school/courses/course-card';
 import { Instructor } from '@/components/driving-school/instructors/instructor-card';
 import { useExitIntent } from '@/hooks/use-exit-intent';
-import { useNotifications } from '@/hooks/use-notifications';
 import { ArrowRight, Star, Users, CheckCircle, Play, Phone, Calendar, MessageCircle, Bell } from 'lucide-react';
 
 export default function HomePage() {
@@ -28,16 +26,6 @@ export default function HomePage() {
   const [isExitIntentPopupOpen, setIsExitIntentPopupOpen] = useState(false);
   const [showWhatsAppOnExit, setShowWhatsAppOnExit] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-
-  // Push notifications hook
-  const {
-    isSupported,
-    permission,
-    requestPermission,
-    showNotification,
-    showBookingConfirmation,
-    showWelcomeNotification
-  } = useNotifications();
   const [instructorFilters, setInstructorFilters] = useState({
     location: '',
     transmission: '',
@@ -65,13 +53,6 @@ export default function HomePage() {
 
   const handleBookCourse = async (course: Course, transmissionType: string) => {
     console.log('Booking course:', course.title, 'Transmission:', transmissionType);
-    
-    // Show booking confirmation notification
-    try {
-      await showBookingConfirmation(course.title, 'Your Instructor');
-    } catch (error) {
-      console.log('Notification not available:', error);
-    }
     
     setIsCourseModalOpen(false);
   };
@@ -111,20 +92,7 @@ export default function HomePage() {
     }
   };
 
-  const handleBookLessons = async () => {
-    // Request notification permission on first interaction
-    if (isSupported && permission === 'default' && !notificationsEnabled) {
-      try {
-        const result = await requestPermission();
-        if (result === 'granted') {
-          setNotificationsEnabled(true);
-          showWelcomeNotification();
-        }
-      } catch (error) {
-        console.log('Notification permission declined');
-      }
-    }
-    
+  const handleBookLessons = () => {
     document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -134,30 +102,9 @@ export default function HomePage() {
     window.open(`https://wa.me/447756183484?text=${encodedMessage}`, '_blank');
   };
 
-  // Test notification function
-  const handleEnableNotifications = async () => {
-    if (!isSupported) {
-      alert('Push notifications are not supported in this browser');
-      return;
-    }
-
-    try {
-      const result = await requestPermission();
-      if (result === 'granted') {
-        setNotificationsEnabled(true);
-        showNotification({
-          title: '🔔 Notifications Enabled!',
-          body: 'You\'ll now receive updates about your driving lessons and reminders.',
-          tag: 'notifications-enabled',
-          requireInteraction: true
-        });
-      } else {
-        alert('Notification permission was denied. You can enable it later in browser settings.');
-      }
-    } catch (error) {
-      console.error('Error requesting notification permission:', error);
-      alert('Failed to enable notifications. Please try again.');
-    }
+  // Notifications removed - functionality simplified
+  const handleEnableNotifications = () => {
+    alert('Notifications have been disabled in this version');
   };
 
   return (
@@ -215,17 +162,7 @@ export default function HomePage() {
               <Phone className="w-5 h-5 mr-2" />
               📞 Call Us Today
             </Button>
-            {isSupported && permission !== 'granted' && (
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-blue-600 text-lg px-8 py-6 transition-all duration-300"
-                onClick={handleEnableNotifications}
-              >
-                <Bell className="w-5 h-5 mr-2" />
-                🔔 Enable Notifications
-              </Button>
-            )}
+
           </div>
         </div>
       </section>
@@ -400,7 +337,6 @@ export default function HomePage() {
 
       <CoursePurchaseCounter />
       <ScrollToTop />
-      <PWAInstallPrompt />
     </main>
   );
 }
